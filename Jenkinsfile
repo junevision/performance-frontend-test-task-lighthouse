@@ -1,15 +1,5 @@
 node {
 
-        properties(
-            [
-                disableConcurrentBuilds(),
-                buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '25', numToKeepStr: '25')),
-                parameters([
-                        choice(name: 'SCRIPT_TO_RUN', choices: 'Client_UI_test\nCoach_UI_test', description: 'Lighthouse script name'),
-                        choice(name: 'ITERATIONS', choices: '1\n2\n3', description: 'Number of iterations' ),
-                ])          
-            ])
-
         stage('Pull Latest Code'){
                 git branch: 'master',
                 url: 'https://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@github.com/junevision/performance-frontend-test-task-lighthouse.git'
@@ -18,7 +8,7 @@ node {
         stage('preparation') {
                 buildSucceeded = true        
                 PWD=pwd()
-                SCIPT = SCRIPT_TO_RUN  
+                SCIPT = "lighthouse_UI_test"  
                 script{
                         DATE= String.format('%tF-%<tH-%<tM-%<tS'
                         , java.time.LocalDateTime.now())
