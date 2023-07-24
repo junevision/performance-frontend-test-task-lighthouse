@@ -24,7 +24,7 @@ node {
                         , java.time.LocalDateTime.now())
                 }
                 RESULTS_DIR="testResults/${SCIPT}/${DATE}"
-                DOCKER_CMD = "docker run --rm -v ${WORKSPACE}/testResults:${PWD}/reports -w "$PWD" ibombit/lighthouse-puppeteer-chrome:latest node <shopping.js>"
+                DOCKER_CMD = "docker run --rm -v ${WORKSPACE}/testResults:$PWD/reports -w "$PWD" ibombit/lighthouse-puppeteer-chrome:latest node <shopping.js>"
         }
 
         stage('runShell') {
@@ -38,7 +38,7 @@ node {
         }
 
         stage('copyResults') {
-                sh "rsync -r ${PWD}/testResults/* /opt/lighthouse-result/"
+                sh "rsync -r $PWD/testResults/* /opt/lighthouse-result/"
         }
 
         stage('addLinkToBuildDescription') {
