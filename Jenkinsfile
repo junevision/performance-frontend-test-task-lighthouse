@@ -1,24 +1,27 @@
-stage('Frontend Lighthouse Performance Tests') {
-  agent any
+pipeline {
 
-  steps {
-    deleteDir()
-    checkout scm
-    sh 'npm install'
-    sh 'npm run lighthouse'
-  }
+    agent any
 
-  post {
-    always {
-      publishHTML (target: [
-        allowMissing: false,
-        alwaysLinkToLastBuild: false,
-        keepAll: true,
-        reportDir: '.',
-        reportFiles: 'lighthouse-report.html',
-        reportName: "Lighthouse"
-      ])
+    stage('Frontend Lighthouse Performance Tests') {
+
+        steps {
+            deleteDir()
+            checkout scm
+            sh 'npm install'
+            sh 'npm run lighthouse'
+        }
+
+    post {
+        always {
+            publishHTML (target: [
+                allowMissing: false,
+                alwaysLinkToLastBuild: false,
+                keepAll: true,
+                reportDir: '.',
+                reportFiles: 'lighthouse-report.html',
+                reportName: "Lighthouse"
+            ])
+        }
     }
-  }
-  
+}
 }
