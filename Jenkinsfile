@@ -1,16 +1,13 @@
 stage('Frontend Lighthouse Performance Tests') {
-  agent {
-    label 'master'
-  }
-  when {
-    branch 'master'
-  }
+  agent any
+
   steps {
     deleteDir()
     checkout scm
     sh 'npm install'
     sh 'npm run lighthouse'
   }
+
   post {
     always {
       publishHTML (target: [
@@ -23,4 +20,5 @@ stage('Frontend Lighthouse Performance Tests') {
       ])
     }
   }
+  
 }
