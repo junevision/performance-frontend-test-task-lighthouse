@@ -143,7 +143,7 @@ async function captureReport() {
 
 	const reportName = `/user-flow_report_${getFormattedDate(currentTime)}.html`;
 	
-	const reportPath = __dirname + reportName;
+	const reportPath = __dirname + "/reports/" + reportName;
 	//const reportPathJson = __dirname + '/user-flow.report.json';
 
 	const report = await flow.generateReport();
