@@ -2,19 +2,6 @@ const fs = require('fs')
 const puppeteer = require('puppeteer')
 const lighthouse = require('lighthouse/lighthouse-core/fraggle-rock/api.js')
 
-function getFormattedDate(date) {
-	const year = date.getFullYear();
-	const month = (`0${date.getMonth() + 1}`).slice(-2);
-	const day = (`0${date.getDate()}`).slice(-2);
-	const hours = (`0${date.getHours()}`).slice(-2);
-	const minutes = (`0${date.getMinutes()}`).slice(-2);
-	const seconds = (`0${date.getSeconds()}`).slice(-2);
-  
-	const dateFormat = `${year}${month}${day}_${hours}${minutes}${seconds}`;
-  
-	return dateFormat;
-  }
-
 async function captureReport() {
 	const browser = await puppeteer.launch({"headless": 'new', args: ['--allow-no-sandbox-job', '--allow-sandbox-debugging', '--no-sandbox', '--disable-gpu', '--disable-gpu-sandbox', '--display', '--ignore-certificate-errors', '--disable-storage-reset=true']});
 	// const browser = await puppeteer.launch({"headless": false, args: ['--allow-no-sandbox-job', '--allow-sandbox-debugging', '--no-sandbox', '--ignore-certificate-errors', '--disable-storage-reset=true']});
@@ -139,18 +126,18 @@ async function captureReport() {
 	console.log('Filling in all required fields, clicking on "Place order" is completed');
 
 	//================================REPORTING================================
-	const currentTime = new Date();
 
-	const reportName = `/user-flow_report_${getFormattedDate(currentTime)}.html`;
+	const reportName = '/user-flow_report.html';
+	const reportJsonName = '/user-flow_report.json';
 	
-	const reportPath = __dirname + "/reports/" + reportName;
-	//const reportPathJson = __dirname + '/user-flow.report.json';
+	const reportPath = __dirname + reportName;
+	const reportJsonPath = __dirname + reportJsonName;
 
 	const report = await flow.generateReport();
-	//const reportJson = JSON.stringify(flow.getFlowResult()).replace(/</g, '\\u003c').replace(/\u2028/g, '\\u2028').replace(/\u2029/g, '\\u2029');
+	const reportJson = JSON.stringify(await flow.createFlowResult()).replace(/</g, '\\u003c').replace(/\u2028/g, '\\u2028').replace(/\u2029/g, '\\u2029');
 	
 	fs.writeFileSync(reportPath, report);
-	//fs.writeFileSync(reportPathJson, reportJson);
+	fs.writeFileSync(reportJsonPath, reportJson);
 	
     await browser.close();
 }
