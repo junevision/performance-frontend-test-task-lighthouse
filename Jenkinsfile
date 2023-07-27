@@ -17,7 +17,20 @@ node {
 
         stage('Publish Test Result'){        
                 archiveArtifacts artifacts: "$BUILD_NUMBER/user-flow_report.html"
-                publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: "$BUILD_NUMBER", reportFiles: "user-flow_report.html", reportName: 'Lighthouse Performance Report', reportTitles: "", useWrapperFileDirectly: true])
+                
+                post {
+                        success {
+                        // publish html
+                        publishHTML target: [
+                        allowMissing: false,
+                        alwaysLinkToLastBuild: false,
+                        keepAll: true,
+                        reportDir: "$WORKSPACE/$BUILD_NUMBER/",
+                        reportFiles: "user-flow_report.html",
+                        reportName: "Lighthouse Performance Report"
+                        ]
+                        }
+                }
         } 
 
 }
