@@ -10,7 +10,7 @@ node {
         } 
 
         stage('Run Test'){
-                sh "node shopping.js"
+                sh "~/usr/local/bin/node shopping.js"
                 sh "mv user-flow_report.html $WORKSPACE/$BUILD_NUMBER/"
         } 
 
