@@ -37,7 +37,8 @@ pipeline {
               keepAll: true,
               reportDir: "$WORKSPACE/$BUILD_NUMBER/",
               reportFiles: "user-flow_report.html",
-              reportName: "Lighthouse Performance Report"
+              reportName: "Lighthouse Performance Report",
+              useWrapperFileDirectly: true
             ]
         }
       }
